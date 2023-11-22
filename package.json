@@ -1,0 +1,16 @@
+{
+  "name": "aits-docker-backend",
+  "version": "0.1.0",
+  "description": "Answer with API data to a frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "type": "module"
+}
