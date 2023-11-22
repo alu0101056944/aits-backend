@@ -4,35 +4,37 @@
 import express from 'express';
 import {fileURLToPath} from 'url';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import nocache from 'nocache';
+import { MongoClient } from 'mongodb';
 
-mongoose.connect('mongodb://localhost:27017/maindatabase',
-    { useNewUrlParser: true, useUnifiedTopology: true });
-
+const uri = 'mongodb://localhost:27017/maindatabase';
 
 // cli:
 // mongoimport --db maindatabase  --collection foo  --file assets/goods.json
 
-const goodsModel =
-    mongoose.model('goods', new mongoose.Schema(
-      {
-        bienes: [
-            {
-              nombre: String,
-              antecedentes: String,
-              tipo: {
-                arquitectura: String,
-                época: String
-              },
-              img: String,
-              localizacion: {
-                lat: String,
-                long: String
-              }
-            }
-          ]
-      }));
+async function fetchData() {
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Connected to the database');
+
+    const database = client.db('maindatabase');
+    const collection = database.collection('foo');
+
+    // Fetch the data
+    const result = await collection.find().toArray();
+
+    // Print the results
+    console.log(result);
+    delete result[0]._id;
+    return result[0];
+  } finally {
+    // Close the connection when done
+    await client.close();
+    console.log('Connection closed');
+  }
+}
 
 // Create and serve http server
 function main() {
@@ -48,9 +50,10 @@ function main() {
 
   app.get('/', async (request, response) => {
         try {
-          const RESPONSE_CONTENT = await goodsModel.find();
-          response.send(JSON.stringify(RESPONSE_CONTENT, null, 2));
+          // response.send(JSON.stringify(RESPONSE_CONTENT, null, 2));
+          const responseJson = await fetchData();
           console.log('able to fetch from db');
+          response.send(responseJson);
         } catch (error) {
           console.error('Could not fetch information from mongo database: ' + error);
           console.error('Did not start express web server.');
