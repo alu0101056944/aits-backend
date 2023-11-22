@@ -1,6 +1,6 @@
 {
   "name": "aits-docker-backend",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Answer with API data to a frontend",
   "main": "index.js",
   "scripts": {
