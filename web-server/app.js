@@ -3,14 +3,16 @@
 
 import express from 'express';
 import {fileURLToPath} from 'url';
+import cors from 'cors';
 
 // Create and serve http server
 function main() {
   const app = express();
   const PORT = 8080;
   app.set('port', PORT);
+  app.use(cors());
 
-  app.listen(PORT, '0.0.0.0', () => {
+  app.listen(PORT, '127.0.0.1', () => {
         console.log('Server listening at 0.0.0.0:' + PORT);
       });
 
