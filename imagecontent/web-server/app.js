@@ -44,7 +44,7 @@ function main() {
   app.use(cors());
   app.use(nocache());
 
-  app.listen(PORT, 'localhost', () => {
+  app.listen(PORT, '0.0.0.0', () => {
         console.log('Server listening at 0.0.0.0:' + PORT);
       });
 
