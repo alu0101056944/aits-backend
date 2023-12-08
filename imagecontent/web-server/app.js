@@ -7,7 +7,7 @@ import cors from 'cors';
 import nocache from 'nocache';
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb://mymongodatabase:27017/maindatabase';
+const uri = 'mongodb://10.6.128.129:27017/maindatabase';
 
 // cli:
 // mongoimport --db maindatabase  --collection foo  --file assets/goods.json

@@ -3,4 +3,4 @@
 docker rm backendcontainer -f
 docker rmi backendcontainer
 docker build -t backend:latest .
-docker run --name backendcontainer --network task1network -p8080:8080 backend
+docker run --name backendcontainer -p8080:8080 --network host backend
